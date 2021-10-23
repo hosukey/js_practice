@@ -31,7 +31,7 @@ body {
   height: 500px;
   margin: 0 auto;
   position: relative;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .slide {
@@ -48,7 +48,8 @@ body {
   object-fit: cover;
 }
 
-button {
+.left,
+.right {
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -68,6 +69,7 @@ button {
 
 .left:hover {
   transform: translate(-50%, -60%);
+  opacity: 1;
 }
 
 .right {
@@ -77,7 +79,27 @@ button {
 
 .right:hover {
   transform: translate(50%, -60%);
+  opacity: 1;
 }
-.slider_container button:hover {
+
+.dots_container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.dot {
+  z-index: 2;
+  background-color: white;
+  opacity: 0.5;
+  width: 16px;
+  height: 16px;
+  margin: 0 10px 20px;
+  border-radius: 50%;
+}
+
+.dot_active {
+  background-color: white;
   opacity: 1;
 }

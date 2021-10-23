@@ -12,11 +12,20 @@ const sliderContainer = document.querySelector('.slider_container');
 const slides = document.querySelectorAll('.slide');
 const leftBtn = document.querySelector('.left');
 const rightBtn = document.querySelector('.right');
+const dotsContainer = document.querySelector('.dots_container');
 
 let curSlide = 0;
 const maxSlide = slides.length;
 
 // Functions
+const createDots = function () {
+  slides.forEach((_, i) => {
+    dotsContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dot" data-value="${i}"></button>`
+    );
+  });
+};
 
 const goToSlide = function () {
   slides.forEach((s, i) => {
@@ -31,20 +40,25 @@ const nextSlide = function () {
   if (curSlide === maxSlide) {
     curSlide = 0;
   }
-  goToSlide();
+  goToSlide(curSlide);
 };
 
 const prevSlide = function () {
   if (curSlide === 0) {
-    // curSlide = maxSlide - 1; !!!!!work here!!!!!
+    curSlide = maxSlide;
   }
-  goToSlide();
+  if (curSlide > 0) {
+    curSlide--;
+  }
+  goToSlide(curSlide);
 };
 
 function init() {
   goToSlide(0);
+  createDots();
 }
 init();
+
 //Event handlers
 
 rightBtn.addEventListener('click', nextSlide);
