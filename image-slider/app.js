@@ -22,14 +22,23 @@ const createDots = function () {
   slides.forEach((_, i) => {
     dotsContainer.insertAdjacentHTML(
       'beforeend',
-      `<button class="dot" data-value="${i}"></button>`
+      `<button class="dot" data-value=${i}></button>`
     );
   });
 };
 
-const goToSlide = function () {
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dot')
+    .forEach((dot) => dot.classList.remove('dot_active'));
+  document
+    .querySelector(`.dot[data-value="${slide}"]`)
+    .classList.add('dot_active');
+};
+
+const goToSlide = function (slide) {
   slides.forEach((s, i) => {
-    s.style.transform = `translateX(${100 * (i - curSlide)}%)`;
+    s.style.transform = `translateX(${100 * (i - slide)}%)`;
   });
 };
 
@@ -41,6 +50,7 @@ const nextSlide = function () {
     curSlide = 0;
   }
   goToSlide(curSlide);
+  activateDot(curSlide);
 };
 
 const prevSlide = function () {
@@ -51,15 +61,32 @@ const prevSlide = function () {
     curSlide--;
   }
   goToSlide(curSlide);
+  activateDot(curSlide);
 };
 
 function init() {
-  goToSlide(0);
   createDots();
+  goToSlide(0);
+  activateDot(0);
 }
 init();
 
 //Event handlers
 
 rightBtn.addEventListener('click', nextSlide);
+
 leftBtn.addEventListener('click', prevSlide);
+
+dotsContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dot')) {
+    const slide = e.target.dataset.value;
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
+
+window.addEventListener('keydown', function (e) {
+  if (e.code === 'ArrowLeft') prevSlide();
+
+  if (e.code === 'ArrowRight') nextSlide();
+});
