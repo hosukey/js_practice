@@ -9,11 +9,15 @@ let displayValue = 0;
 
 const userInput = function (e) {
   const inputValue = e.target.textContent;
-  //display numbers to the display box
+  //displaying input numbers
   if (e.target.classList.contains('number')) {
-    displayValue += inputValue;
-    display.textContent = displayValue;
-    //how do I get rid of the 0 at the beginning?
+    if (displayValue === 0) {
+      displayValue = inputValue;
+      display.textContent = displayValue;
+    } else {
+      displayValue += inputValue;
+      display.textContent = displayValue;
+    }
   }
 };
 
